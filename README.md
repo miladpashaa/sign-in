@@ -1,7 +1,7 @@
-# 🔐 صفحه ورود (Sign-In) — Next.js
+# 🔐 صفحه ورود (Sign-In) — React + Vite
 
-اپلیکیشن Next.js با یک **فرم ورود مدرن** ساخته‌شده با React 19، TypeScript، Tailwind CSS و
-کامپوننت‌های shadcn/ui — پروژه آموزشی/قالب برای صفحات احراز هویت.
+اپلیکیشن **React خالص** (بدون Next.js) با یک **فرم ورود بروتالیستی** ساخته‌شده با React 19،
+TypeScript، Vite و Tailwind CSS v4 — پروژه آموزشی/قالب برای صفحات احراز هویت.
 
 ---
 
@@ -9,10 +9,12 @@
 
 | بخش | توضیح |
 |---|---|
-| 🎨 فرم ورود | فرم آماده `sign-in-form.tsx` با فیلد ایمیل/رمز، چک‌باکس «مرا به خاطر بسپار» و دکمه‌های شبکه‌های اجتماعی |
-| 🧩 shadcn/ui | کامپوننت‌های استاندارد در `components/ui` (Button, Card, Input, Label, Checkbox) |
-| ⚡ Next.js 15 | ساختار App Router + تایپ‌اسکریپت |
-| 🎭 صفحه دمو | مسیر `app/demo` برای نمایش فرم |
+| 🎨 فرم ورود | فیلد ایمیل/رمز، چک‌باکس «مرا به خاطر بسپار»، دکمه‌های ورود با Google/Apple/GitHub |
+| ✅ اعتبارسنجی | بررسی فرمت ایمیل و حداقل ۸ کاراکتر برای رمز، با پیام خطا و ARIA |
+| 🔑 ورود آزمایشی | ارسال فرم → حالت «Signing in…» → بنر «Access granted» (بک‌اند واقعی ندارد) |
+| 🧱 استایل بروتالیسم | تک‌رنگ، مونواسپیس، گوشه‌های تیز، خطوط مشکی ضخیم، پس‌زمینه شبکه‌ای |
+| 📱 ریسپانسیو | نردبان نقطه‌شکست ۶۴۰ / ۷۶۸ / ۱۰۲۴ پیکسل — در ۳۲۰، ۳۷۵، ۷۶۸ و ۱۴۴۰ تست شده |
+| 🖼 لوگوهای محلی | SVGهای برندها به‌صورت فایل محلی در `src/assets` (بدون وابستگی به CDN) |
 
 ---
 
@@ -23,12 +25,13 @@ npm install
 npm run dev
 ```
 
-سپس در مرورگر: [http://localhost:3000](http://localhost:3000)
+سپس در مرورگر: [http://localhost:5173](http://localhost:5173)
 
 برای نسخه نهایی:
 
 ```bash
-npm run build && npm start
+npm run build      # بررسی تایپ‌اسکریپت + خروجی در dist/
+npm run preview    # سرو کردن نسخه build شده
 ```
 
 ---
@@ -36,19 +39,23 @@ npm run build && npm start
 ## 📁 ساختار پوشه‌ها
 
 ```
-app/                 صفحات (layout, page, demo)
-components/ui/       کامپوننت‌های shadcn/ui
-lib/utils.ts         توابع کمکی (cn)
-prd.md               شرح محصول و نیازمندی‌ها
+index.html              نقطه ورود HTML
+src/main.tsx            بوت‌استرپ React
+src/App.tsx             قاب صفحه (نوار بالا/پایین، شبکه، واترمارک)
+src/SignInForm.tsx      فرم ورود (state، اعتبارسنجی، ارسال)
+src/icons.tsx           آیکون‌های Mail/Lock (SVG درون‌خطی)
+src/assets/*.svg        لوگوهای Google/Apple/GitHub
+src/index.css           @import "tailwindcss"
+prd.md                  شرح محصول و نیازمندی‌ها
 ```
 
 ---
 
 ## 🔗 افزودن احراز هویت واقعی
 
-این پروژه فقط **رابط کاربری** ورود را دارد. برای اتصال به بک‌اند واقعی می‌توانید از
-NextAuth/Auth.js، Clerk یا Supabase استفاده کنید — هندلر فرم در
-`components/ui/sign-in-form.tsx` آماده اتصال است.
+این پروژه فقط **رابط کاربری** ورود را دارد. تابع `handleSubmit` در `src/SignInForm.tsx`
+فعلاً ورود را شبیه‌سازی می‌کند (`shortcut: mock auth`)؛ برای بک‌اند واقعی همان‌جا فراخوانی API
+(مثلاً Supabase، Clerk یا API خودتان) را جایگزین کنید.
 
 > فایل‌های `.env*` هرگز به گیت منتشر نمی‌شوند (در `.gitignore` هستند) — کلیدهای هر سرویس
 > احراز هویت فقط همین‌جا نگه داشته شوند.

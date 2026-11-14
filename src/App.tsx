@@ -1,6 +1,6 @@
-import SignInForm from "@/components/ui/sign-in-form";
+import SignInForm from "./SignInForm";
 
-export default function SignInPage() {
+export default function App() {
   return (
     <main className="min-h-screen bg-[#d9d9d9] p-3 font-mono text-black sm:p-4 lg:p-6">
       <div className="relative flex min-h-[calc(100vh-1.5rem)] flex-col overflow-hidden border-4 border-black bg-white sm:min-h-[calc(100vh-2rem)] lg:min-h-[calc(100vh-3rem)]">
@@ -42,7 +42,7 @@ export default function SignInPage() {
         {/* Bottom bar */}
         <footer className="relative z-10 flex flex-col gap-1 border-t-4 border-black bg-black px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-white sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:text-[11px]">
           <span>© 2026 ACME Corp</span>
-          <span>Next.js · shadcn/ui · Tailwind v4</span>
+          <span>React 19 · Vite · TypeScript · Tailwind v4</span>
         </footer>
       </div>
     </main>
